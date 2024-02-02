@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 'go-server'
+spec:
+  destination:
+    name: 'in-cluster'
+    namespace: 'prod'
+  source:
+    path: 'chart'
+    repoURL: 'https://github.com/LiboMa/gitops-sample'
+    targetRevision: main
+    helm:
+      valueFiles:
+      - values.yaml
+  project: 'default'
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
