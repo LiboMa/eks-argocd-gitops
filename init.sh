@@ -22,8 +22,7 @@ kubectl get all
 init_steps () {
 
 ## init argo password
-echo "ArgoCD Password: $(kubectl get secrets argocd-initial-admin-secret -n argocd --template="{{index .dat
-a.password | base64decode}}")"
+echo "ArgoCD Password: $(kubectl get secrets argocd-initial-admin-secret -n argocd --template="{{index .data.password | base64decode}}")"
 
 ### change password
 
@@ -32,14 +31,16 @@ kubectl port-forward -n argocd svc/argo-cd-argocd-server 8080:80 --address="0.0.
 argocd login localhost:8080
 argocd account update-password
 
+}
+
+
+
 ## install add-ons
 kubectl apply -f bootstrap/addons.yaml
 
 ## isntall applications
 kubectl apply -f bootstrap/codedemos/bootstrap/eks-flask-test-chart.yaml
 
-
-}
 
 ## destory
 destroy () {
