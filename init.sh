@@ -1,9 +1,13 @@
-# all the resource refer to 
+# all the resource refer to
 # https://aws-quickstart.github.io/cdk-eks-blueprints/getting-started/
 
 
+## before install please keep helm installed on your local environment
+brew install helm
+brew install argocd
+
 ## init the cluster argocd and eks
-terraform init
+terraform init -upgrade
 terraform apply -target="module.vpc" -auto-approve
 terraform apply -target="module.eks" -auto-approve
 terraform apply -auto-approve
@@ -16,7 +20,7 @@ aws eks --region us-west-2 update-kubeconfig --name eks-argocd-gitops
 
 cat $KUBECONFIG="/tmp/eks-argocd-gitops" >>~/.kube/config
 
-# for testing
+## for testing
 kubectl get all
 
 init_steps () {

@@ -362,6 +362,3 @@ post install
 5. argocd account update-password
 6. login with new admin account
 
-
-
-

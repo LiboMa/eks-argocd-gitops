@@ -1,7 +1,7 @@
 variable "vpc_cidr" {
   description = "VPC CIDR"
   type        = string
-  default     = "10.0.0.0/16"
+  default     = "10.100.0.0/16"
 }
 variable "region" {
   description = "AWS region"
@@ -12,7 +12,7 @@ variable "region" {
 variable "kubernetes_version" {
   description = "Kubernetes version"
   type        = string
-  default     = "1.28"
+  default     = "1.29"
 }
 variable "addons" {
   description = "Kubernetes addons"

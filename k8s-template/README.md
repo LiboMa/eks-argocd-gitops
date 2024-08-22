@@ -92,7 +92,7 @@ kubectl exec hello-demo-74566b7c97-9dk4j -- curl -s http://10.101.159.90:8080
 ```
 
 
-How to test it:
+## How to test it:
 curl -k  -H"Host: hello-demo.info" https://(your_ingress_ip)/v1
 curl -k  -H"Host: hello-demo.info" https://(your_ingress_ip)/v1
 
