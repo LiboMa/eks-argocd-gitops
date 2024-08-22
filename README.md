@@ -353,12 +353,12 @@ export TF_VAR_gitops_workload_revision=main
 ------------
 
 
-post install
-
+## post install
 1. bash init.sh
 2. copy /tmp/eks-kubeconfig to ~/.kube/config
 3. kubectl port-forward -n argocd svc/argo-cd-argocd-server 8080:80
 4. argocd login localhost:8080
 5. argocd account update-password
 6. login with new admin account
+7. checkin the file [update the application](bootstrap/codedemos/README.md)
 
