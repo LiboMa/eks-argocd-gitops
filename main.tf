@@ -71,7 +71,7 @@ locals {
     enable_ack_dynamodb                          = try(var.addons.enable_ack_dynamodb, false)
     enable_ack_s3                                = try(var.addons.enable_ack_s3, false)
     enable_ack_rds                               = try(var.addons.enable_ack_rds, false)
-    enable_ack_prometheusservice                 = try(var.addons.enable_ack_prometheusservice, false)
+    enable_ack_prometheusservice                 = try(var.addons.enable_ack_prometheusservice, true)
     enable_ack_emrcontainers                     = try(var.addons.enable_ack_emrcontainers, false)
     enable_ack_sfn                               = try(var.addons.enable_ack_sfn, false)
     enable_ack_eventbridge                       = try(var.addons.enable_ack_eventbridge, false)
@@ -233,7 +233,7 @@ module "eks" {
 }
 
 ################################################################################
-# Supporting Resources
+# Supporting Resources - VPC
 ################################################################################
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"

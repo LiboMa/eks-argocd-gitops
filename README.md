@@ -350,10 +350,8 @@ export TF_VAR_gitops_workload_revision=main
 
 
 
-------------
-
-
-## post install
+-----
+## Post Install
 1. bash init.sh
 2. copy /tmp/eks-kubeconfig to ~/.kube/config
 3. kubectl port-forward -n argocd svc/argo-cd-argocd-server 8080:80
@@ -362,3 +360,47 @@ export TF_VAR_gitops_workload_revision=main
 6. login with new admin account
 7. checkin the file [update the application](bootstrap/codedemos/README.md)
 
+### Install the addons
+[eks-blueprint-argocd](https://github.dev/aws-samples/eks-blueprints-add-ons)
+
+```bash 
+git clone https://github.com/aws-samples/eks-blueprints-add-ons.git 
+cd eks-blueprints-add-ons
+```
+
+*edit application.yaml*
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: add-ons
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/aws-samples/eks-blueprints-add-ons.git
+    targetRevision: HEAD
+    path: chart
+    helm:
+      release: add-ons
+      values: |
+        cluster-autoscaler:
+          enable: true
+        metrics-server:
+          enable: true
+  destination:
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    namespace: argocd
+
+```
+#### Deploy the EKS Add-ons
+You may also to enable the add-ons by using terraform-aws-eks-blueprints
+
+```bash 
+kubectl apply -n argocd -f application.yaml
+```
+
+
+#### Also checkout the resources 
+
+- [Single template of terraform eks addon ](https://github.com/aws-ia/terraform-aws-eks-blueprints-addon)

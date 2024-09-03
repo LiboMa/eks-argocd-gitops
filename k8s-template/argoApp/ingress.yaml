@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-demo-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: eks-alb-ingress-shared
+    alb.ingress.kubernetes.io/group.order: '10'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:533267047935:certificate/3d3d621d-acf8-44c0-a1e3-3427b94bdb4e 
+    # alb.ingress.kubernetes.io/actions.hello-demo: >
+    #   {"type":"forward","fixedResponseConfig":{"contentType":"text/plain","statusCode":"200","messageBody":"Host is "gitopts-test.tinyboat.blog"}}
+    # alb.ingress.kubernetes.io/conditions.hello-demo: >
+    #   [{"field":"host-header","hostHeaderConfig":{"values":["gitopts-test.tinyboat.blog"]}}]
+    # alb.ingress.kubernetes.io/actions.redirect-to-eks: >
+    #    {"type":"redirect","redirectConfig":{"host":"gitops-prod.tinyboat.blog","path":"/hello/","port":"80","protocol":"HTTP","query":"k=v","statusCode":"HTTP_302"}}
+spec:
+  ingressClassName: alb
+  rules:
+    - host : gitops-test.tinyboat.blog
+      http:
+        paths:
+        - path: /api/
+          pathType: Prefix 
+          backend:
+            service:
+              name: flask-demo
+              port:
+                number: 8080
+          
+
+
